@@ -1,0 +1,29 @@
+# Virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE settings
+.idea/
+.vscode/
+
+# Secrets
+.env
+.env.*
+!.env.example
+credentials.json
+secrets/
+
+# Local MLflow database and artifacts
+mlflow.db
+mlflow.db-*
+mlruns/
+mlartifacts/
+
+# Temporary files
+*.log
+.DS_Store
+Thumbs.db

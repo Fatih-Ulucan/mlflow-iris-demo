@@ -1,0 +1,10 @@
+{
+  "run_id": "86e3cc1740f54f69a1c241150a6fdc9b",
+  "model_name": "iris-decision-tree",
+  "model_version": "1",
+  "alias": "champion",
+  "validation_f1_macro": 0.9665831244778612,
+  "promotion_rule": "Select the highest validation macro-F1; break ties by lower max_depth. Assign the champion alias only if validation macro-F1 >= 0.90. This is a classroom validation rule, not production approval.",
+  "selection_reason": "Highest validation macro-F1; lower max_depth breaks ties.",
+  "reproduce_command": "python train.py --config-from-run 86e3cc1740f54f69a1c241150a6fdc9b"
+}
