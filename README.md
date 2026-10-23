@@ -1,6 +1,6 @@
-# MLflow Experiment Tracking and Model Registry
+# MLflow Iris Demo
 
-This project predicts Iris flower species from four measurements using a Decision Tree classifier. It compares two hyperparameter settings, logs training results with MLflow, registers the winning model, and reproduces its configuration from a previous run.
+This project predicts Iris flower species from four measurements using a Decision Tree classifier. It compares two hyperparameter settings, logs results with MLflow, registers the winning model, and reproduces its configuration from a previous run.
 
 ## Dataset
 
@@ -14,7 +14,7 @@ This project predicts Iris flower species from four measurements using a Decisio
 - Features: sepal length, sepal width, petal length, and petal width.
 - Target: setosa, versicolor, or virginica.
 
-The exact dataset used by each run is saved as `data/iris.csv`. Its SHA-256 hash and split indices are recorded in `dataset_metadata.json`.
+Each run saves the exact dataset as the MLflow artifact `data/iris.csv`. Its SHA-256 hash and split indices are recorded in `dataset_metadata.json`.
 
 Dataset SHA-256:
 
@@ -24,7 +24,7 @@ Dataset SHA-256:
 
 ## Setup
 
-Create a virtual environment using the Python version recorded in the model's `python_env.yaml`. The following commands are for Windows PowerShell:
+Create and activate a virtual environment. The following commands are for Windows PowerShell:
 
 ```powershell
 python -m venv .venv
@@ -32,7 +32,7 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-Dependency versions are pinned in `requirements.txt`.
+Dependency versions are pinned in `requirements.txt`. Each logged model also includes environment metadata in `python_env.yaml`.
 
 ## Tracking configuration
 
@@ -44,11 +44,13 @@ From the project directory, the equivalent relative URI is:
 sqlite:///mlflow.db
 ```
 
-Experiment name:
+The existing experiment retains its original internal name:
 
 ```text
 thesis-mlflow-demo
 ```
+
+The repository is named `mlflow-iris-demo`; changing the repository name does not rename existing MLflow experiments.
 
 Start the Tracking UI from the project directory:
 
@@ -160,15 +162,22 @@ For subsequent runs, the script records the Git commit and whether the working t
 
 ### Reproduce after cloning
 
-The original run IDs belong to the original local database. The database and model artifacts are excluded from Git.
+Clone the repository and enter its directory:
 
-After cloning, first run:
+```powershell
+git clone https://github.com/Fatih-Ulucan/mlflow-iris-demo.git
+cd mlflow-iris-demo
+```
+
+Follow the setup instructions above, then run:
 
 ```powershell
 python train.py
 ```
 
-This creates a new local experiment, comparison, and registered model. Then reproduce the new winner using its generated run ID:
+The original run IDs belong to the original local database. The database and model artifacts are excluded from Git, so a fresh clone creates new run IDs and its own local registry.
+
+Reproduce the new winner using its generated run ID:
 
 ```powershell
 $winner = Get-Content reports/winner.json -Raw | ConvertFrom-Json
